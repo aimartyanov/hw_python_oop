@@ -103,8 +103,7 @@ def read_package(workout_type: str, data: list) -> Training:
     training_type: dict = {
                            "RUN": Running,
                            "SWM": Swimming,
-                           "WLK": SportsWalking
-                           }
+                           "WLK": SportsWalking}
     if workout_type not in training_type:
         raise KeyError(
             "Некорректный тип тренировки."
