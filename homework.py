@@ -23,10 +23,10 @@ class InfoMessage:
 
 @dataclass
 class Training:
+    """Базовый класс тренировки."""
     LEN_STEP: ClassVar[float] = 0.65
     M_IN_KM: ClassVar[int] = 1000
     M_IN_H: ClassVar[int] = 60
-    """Базовый класс тренировки."""
 
     action: int
     duration: float
@@ -55,9 +55,9 @@ class Training:
 
 
 class Running(Training):
+    """Тренировка: бег."""
     COEF1: ClassVar[int] = 18
     COEF2: ClassVar[int] = 20
-    """Тренировка: бег."""
 
     def get_spent_calories(self) -> float:
         return ((self.COEF1 * self.get_mean_speed() - self.COEF2)
@@ -67,9 +67,9 @@ class Running(Training):
 
 @dataclass
 class SportsWalking(Training):
+    """Тренировка: спортивная ходьба."""
     COEFW1: ClassVar[float] = 0.035
     COEFW2: ClassVar[float] = 0.029
-    """Тренировка: спортивная ходьба."""
 
     height: float
 
@@ -81,10 +81,10 @@ class SportsWalking(Training):
 
 @dataclass
 class Swimming(Training):
+    """Тренировка: плавание."""
     LEN_STEP: ClassVar[float] = 1.38
     COEFS1: ClassVar[float] = 1.1
     COEFS2: ClassVar[int] = 2
-    """Тренировка: плавание."""
 
     length_pool: int
     count_pool: int
@@ -100,9 +100,11 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    training_type: dict = ({"RUN": Running,
-                            "SWM": Swimming,
-                            "WLK": SportsWalking})
+    training_type: dict = {"RUN": Running,
+                           "SWM": Swimming,
+                           "WLK": SportsWalking}
+    if workout_type not in training_type:
+        raise KeyError("Некорректный тип тренировки")
     return training_type.get(workout_type)(*data)
 
 
