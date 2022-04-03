@@ -100,11 +100,15 @@ class Swimming(Training):
 
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
-    training_type: dict = {"RUN": Running,
+    training_type: dict = {
+                           "RUN": Running,
                            "SWM": Swimming,
-                           "WLK": SportsWalking}
+                           "WLK": SportsWalking
+                           }
     if workout_type not in training_type:
-        raise KeyError("Некорректный тип тренировки")
+        raise KeyError(
+            "Некорректный тип тренировки."
+            f"Тип {InfoMessage.training_type} отсутствует в базе")
     return training_type.get(workout_type)(*data)
 
 
