@@ -108,7 +108,7 @@ def read_package(workout_type: str, data: list) -> Training:
     if workout_type not in training_type:
         raise KeyError(
             "Некорректный тип тренировки."
-            f"Тип {InfoMessage.training_type} отсутствует в базе")
+            f"Тип тренировки {workout_type} отсутствует в базе")
     return training_type.get(workout_type)(*data)
 
 
